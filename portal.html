@@ -1,0 +1,25 @@
+<div id="nav-portal">
+
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
+
+<script type="text/javascript">
+    $.post("process/portal.php", {
+        action: 'session'
+    },
+        function (data) {
+
+            var jsondata = JSON.parse(data);
+
+            if (jsondata[0].session == 'index') {
+                window.top.location.href = "index.html";
+            }
+            else {
+                $('#nav-portal').load('portal2.html');
+            }
+
+        });
+</script>

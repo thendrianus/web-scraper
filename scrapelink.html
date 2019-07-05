@@ -1,0 +1,297 @@
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header">
+			Scrape Link
+		</h1>
+
+	</div>
+</div>
+
+
+<section class="panel panel-default">
+	<ol class="breadcrumb">
+		<li>
+			<i class="fa fa-dashboard"></i> <a href="index.html">Dashboard</a>
+		</li>
+	</ol>
+	<div class="panel-body">
+
+		<form class="form-horizontal" action="javascript:void(0);" name="form1" id="form1">
+
+			<div class="form-group" style="display:none;">
+				<label class="col-sm-2 control-label">System Account ID</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" value="" id="account_id" disabled="disabled" value="1">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Web Source</label>
+				<div class="col-sm-10">
+					<select class="form-control m-b" id="web_source">
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Brand</label>
+				<div class="col-sm-10">
+					<select class="form-control m-b" id="brand">
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Category</label>
+				<div class="col-sm-10">
+					<select class="form-control m-b" id="category">
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Link</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="web_source_link" required="required">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Scrape Time</label>
+				<div class="col-sm-3">
+					<input type="number" class="form-control" id="scrapetime" maxlength="3" required="required">
+				</div>
+				<div class="col-sm-3">
+					<input type="checkbox" name="vehicle" value="0" id="midnight"> Scrape Mid Night
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Note</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="note" maxlength="50" required="required">
+				</div>
+			</div>
+
+			<div class="line line-dashed line-lg pull-in"></div>
+
+			<div class="form-group text-center">
+
+				<button class="btn btn-primary" value="add" id="formsubmit" onClick="formsubmits('add')">Tambah
+					Link</button>
+				<button class="btn btn-primary" value="add" id="editsubmit" onClick="formsubmits('edit')">Edit
+					Link</button>
+				<button class="btn btn-primary" value="add" id="editcancel" formnovalidate="formnovalidate"
+					onClick="formsubmits('cancel')">Cancel</button>
+
+
+			</div>
+		</form>
+		<div class="line line-dashed line-lg pull-in"></div>
+		<form class="form-horizontal" action="javascript:void(0);">
+			<div class="table-responsive">
+				<table class="table table-striped" id="list_table" cellpadding="0" cellspacing="0" border="0"
+					class="display" width="100%">
+					<thead>
+						<tr>
+							<th>ID</th>
+
+							<th>Web Source</th>
+
+							<th>Brand</th>
+
+							<th>Category</th>
+
+							<th>Link</th>
+
+							<th>Scrape Time</th>
+
+							<th>Note</th>
+
+							<th>Last Update</th>
+
+							<th>Edit / Delete</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</form>
+	</div>
+
+	</div>
+</section>
+
+<script>
+	$('#editcancel').hide();
+	$('#editsubmit').hide();
+
+	$.post("process/Scrapelink.php", {
+		action: 'get_web_source'
+	},
+		function (data) {
+			var jsondata = JSON.parse(data);
+			for (var i = 0; i < jsondata.length; i++) {
+				var option_var = "<option value=\"" + jsondata[i].web_source_id + "\">" + jsondata[i].name + "</option>";
+				$('#web_source').append(option_var);
+			}
+		});
+
+	$.post("process/Scrapelink.php", {
+		action: 'brand'
+	},
+		function (data) {
+			var jsondata = JSON.parse(data);
+			for (var i = 0; i < jsondata.length; i++) {
+				var option_var = "<option value=\"" + jsondata[i].brand_id + "\">" + jsondata[i].name + "</option>";
+				$('#brand').append(option_var);
+			}
+		});
+
+	$.post("process/Scrapelink.php", {
+		action: 'category'
+	},
+		function (data) {
+			alert(data);
+			var jsondata = JSON.parse(data);
+			for (var i = 0; i < jsondata.length; i++) {
+				var option_var = "<option value=\"" + jsondata[i].category_id + "\">" + jsondata[i].name + "</option>";
+				$('#category').append(option_var);
+			}
+		});
+
+	function formsubmits(i) {
+		if (i == 'add') {
+			document.form1.action = "javascript:add();";
+		}
+		else if (i == 'edit') {
+			document.form1.action = "javascript:edit();";
+		}
+		else if (i == 'cancel') {
+			document.form1.action = "javascript:cancel();";
+		}
+	}
+
+	//list table
+	var dataTable = $('#list_table').DataTable({
+		"processing": true,
+		"serverSide": true,
+		"ajax": {
+			url: "process/Scrapelink.php",
+			data: { 'action': 'list_table' },
+			type: "post",
+			error: function () {
+				$(".myTable-error").html("");
+				$("#list_table").append('<tbody class="myTable-error"><tr><th colspan="3">No data found in the server</th></tr></tbody>');
+				//$("#list_table").css("display","none");
+			}
+		}
+	});
+
+
+	//edit button
+	function editbutton(no) {
+		$('#formsubmit').hide();
+		$('#editsubmit').show();
+		$('#editcancel').show();
+		//alert(no);
+		$.post("process/Scrapelink.php", {
+			action: 'edit_data',
+			id: no
+		},
+			function (data) {
+				var jsondata = JSON.parse(data);
+				document.getElementById('account_id').value = jsondata[0].scraping_link_id;
+				document.getElementById('web_source').value = jsondata[0].web_source_id;
+				document.getElementById('brand').value = jsondata[0].brand_id;
+				document.getElementById('category').value = jsondata[0].category_id;
+				document.getElementById('web_source_link').value = jsondata[0].link;
+				if (jsondata[0].set_scrape_time == 0) {
+					document.getElementById("midnight").checked = false;
+				} else {
+					document.getElementById("midnight").checked = true;
+				}
+				document.getElementById('scrapetime').value = jsondata[0].scrape_time;
+				document.getElementById('note').value = jsondata[0].note;
+			});
+	}
+
+	//delete button funtion
+	function deletebutton(no) {
+		document.form1.action = "javascript:void(0);";
+		if (confirm('Apa anda yakin anda ingin menghapus data ini?')) {
+			$.post("process/Scrapelink.php", {
+				action: 'delete',
+				id: no
+			},
+				function (data) {
+					alert(data);
+					$('#list_table').DataTable().ajax.reload();
+				});
+		} else {
+			// Do nothing!
+		}
+	}
+
+
+	//add button
+	function add() {
+		if (document.getElementById('midnight').checked) {
+			var checkedvar = 1;
+		} else {
+			var checkedvar = 0;
+		}
+
+		$.post("process/Scrapelink.php", {
+			action: 'add',
+			web_source: '' + $('#web_source').val() + '',
+			brand: '' + $('#brand').val() + '',
+			category: '' + $('#category').val() + '',
+			web_source_link: '' + $('#web_source_link').val() + '',
+			scrapetime: '' + $('#scrapetime').val() + '',
+			checkedvar: checkedvar,
+			note: '' + $('#note').val() + ''
+		},
+			function (data) {
+				alert(data);
+				document.getElementById('form1').reset();
+				$('#list_table').DataTable().ajax.reload();
+			});
+	}
+
+
+	//edit button
+	function edit() {
+		if (document.getElementById('midnight').checked) {
+			var checkedvar = 1;
+		} else {
+			var checkedvar = 0;
+		}
+		$.post("process/Scrapelink.php", {
+			action: 'edit',
+			web_source_id: '' + $('#account_id').val() + '',
+			web_source: '' + $('#web_source').val() + '',
+			brand: '' + $('#brand').val() + '',
+			category: '' + $('#category').val() + '',
+			web_source_link: '' + $('#web_source_link').val() + '',
+			scrapetime: '' + $('#scrapetime').val() + '',
+			checkedvar: checkedvar,
+			note: '' + $('#note').val() + ''
+		},
+			function (data) {
+				document.getElementById('form1').reset();
+				$('#list_table').DataTable().ajax.reload();
+				$('#formsubmit').show();
+				$('#editsubmit').hide();
+				$('#editcancel').hide();
+			});
+	}
+
+	//camcel button
+	function cancel() {
+		document.getElementById('form1').reset();
+		$('#formsubmit').show();
+		$('#editsubmit').hide();
+		$('#editcancel').hide();
+
+	}	
+</script>

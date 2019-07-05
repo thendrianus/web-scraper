@@ -1,0 +1,386 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            Produk Jam Tangan
+        </h1>
+
+    </div>
+</div>
+
+
+<section class="panel panel-default">
+    <ol class="breadcrumb">
+        <li>
+            <i class="fa fa-dashboard"></i> Dashboard
+        </li>
+    </ol>
+    <div class="panel-body">
+
+        <header class="jumbotron hero-spacer">
+            <H1>Search</H1>
+            <div class="row">
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" value="" id="search_value" placeholder="Search">
+                </div>
+                <button class="btn btn-primary" value="add" id="formsubmit" onClick="search_watch()">Search
+                    Watches</button>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label class="col-sm-8 control-label">Search Dari Yang</label>
+                    <select class="form-control m-b" id="search_price">
+                        <option value="1">Termurah</option>
+                        <option value="2">Termahal</option>
+                    </select>
+                </div>
+                <div class="col-sm-4">
+                    <label class="col-sm-2 control-label">Category</label>
+                    <select class="form-control m-b" id="search_category">
+                        <option value="3">All Category</option>
+                        <option value="1">Jam Pria</option>
+                        <option value="2">Jam Wanita</option>
+                    </select>
+                </div>
+                <div class="col-sm-4">
+                    <label class="col-sm-2 control-label">Brand</label>
+                    <select class="form-control m-b" id="search_brand">
+                    </select>
+                </div>
+            </div>
+
+            <hr>
+            <div>
+                <div class="col-sm-2">
+                    <input type="checkbox" name="vehicle" value="Bike" id="radatime" checked> Radatime
+                </div>
+                <div class="col-sm-2">
+                    <input type="checkbox" name="vehicle" value="Bike" id="machwatch" checked> Machtwatch
+                </div>
+                <div class="col-sm-2">
+                    <input type="checkbox" name="vehicle" value="Bike" id="mataharimall" checked> Matahari Mall
+                </div>
+                <div class="col-sm-2">
+                    <input type="checkbox" name="vehicle" value="Bike" id="lazada" checked> Lazada
+                </div>
+                <div class="col-sm-2">
+                    <input type="checkbox" name="vehicle" value="Bike" id="rakuten" checked> Rakuten
+                </div>
+            </div>
+        </header>
+
+        <hr>
+        <div class="table-responsive">
+            <p id='page_total'></p>
+            <table class="table table-striped b-t b-light" id="tabledata">
+                <thead>
+                    <tr>
+                        <th> Image</th>
+
+                        <th> Product</th>
+
+                        <th> Brand</th>
+
+                        <th> Source</th>
+
+                        <th> Price</th>
+
+                        <th> Recommend</th>
+
+                    </tr>
+                </thead>
+
+                <tbody id="search_watches">
+                    <tr></tr>
+                </tbody>
+            </table>
+            <div id='page_number'>
+
+            </div>
+        </div>
+
+
+    </div>
+
+    </div>
+</section>
+
+<div id="Modalr" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Recomment Product</h4>
+            </div>
+            <div class="modal-body">
+                <div id="modal_content" class=" row text-center ">
+                    <form class="form-horizontal" action="javascript:void(0);" name="fromAccount" id="fromAccount"
+                        autocomplete="off">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Recommended Product</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="rproduct" disabled="disable">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Link</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="rlink" disabled="disable">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Brand</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="rbrand" disabled="disable">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Source</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="rsource" disabled="disable">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Price</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="rprice" disabled="disable">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Due Date Time</label>
+                            <div class="col-sm-3">
+                                <input type="date" class="form-control" value="2016-03-01" format="yyyy-mm-dd"
+                                    id="due_date" maxlength="3" required="required">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Note</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="note" maxlength="50">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Image</label>
+                            <div class="col-sm-3">
+                                <img src="" style="height: 120px;" id="rimage">
+                            </div>
+                        </div>
+
+                </div>
+
+                <div class="form-group text-center">
+
+                    <button class="btn btn-primary" value="add" id="formsubmit" onClick="add()">Recommend This
+                        Item</button>
+
+                </div>
+
+                <div class="line line-dashed line-lg pull-in"></div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('#editcancel').hide();
+    $('#editsubmit').hide();
+
+    function formsubmits(i) {
+        if (i == 'add') {
+            document.form1.action = "javascript:add();";
+        }
+        else if (i == 'edit') {
+            document.form1.action = "javascript:edit();";
+        }
+        else if (i == 'cancel') {
+            document.form1.action = "javascript:cancel();";
+        }
+    }
+
+    //list table
+    $.post("process/index.php", {
+        action: 'get_brand'
+    },
+        function (data) {
+            var jsondata = JSON.parse(data)
+            for (var i = 0; i < jsondata.length; i++) {
+                var option_var = "<option value=\"" + jsondata[i].brand_id + "\">" + jsondata[i].name + "</option>";
+                $('#search_brand').append(option_var);
+            }
+        });
+
+    var jsondata;
+
+    function search_watch() {
+
+        jsondata = "";
+
+        var checkedvar = "";
+        if (document.getElementById('radatime').checked) {
+            checkedvar = checkedvar + "OR t2.web_source_id = 1 ";
+        } if (document.getElementById('machwatch').checked) {
+            checkedvar = checkedvar + "OR t2.web_source_id = 2 ";
+        } if (document.getElementById('mataharimall').checked) {
+            checkedvar = checkedvar + "OR t2.web_source_id = 3 ";
+        } if (document.getElementById('lazada').checked) {
+            checkedvar = checkedvar + "OR t2.web_source_id = 4 ";
+        } if (document.getElementById('rakuten').checked) {
+            checkedvar = checkedvar + "OR t2.web_source_id = 5 ";
+        }
+
+        if (checkedvar != "") {
+            checkedvar = "&&(" + (checkedvar.substring(2)) + ")";
+        }
+
+        $.post("process/index.php", {
+            action: 'search_watches',
+            category: '' + $('#search_category').val() + '',
+            search_price: '' + $('#search_price').val() + '',
+            brand: '' + $('#search_brand').val() + '',
+            search: '' + $('#search_value').val() + '',
+            checked2: checkedvar
+        },
+            function (data) {
+                // $('#search_value').val(data);
+
+                $('#top_watches').hide();
+                // alert("asd");
+                jsondata = JSON.parse(data);
+                if (jsondata != '') {
+                    watches_page(1);
+                }
+                else {
+                    // alert("bnm");
+                    $('#search_watches').html("<div class='row text-center'> <h2>Search No Result</h2> </div>");
+                }
+
+            });
+    }
+
+    function watches_page(page) {
+        var total_item = jsondata.length;
+        var item_in_page = page * 40;
+
+        var total_page = total_item / 40 + 2;
+
+        $('#search_watches').html('');
+
+        if (item_in_page > total_item) {
+            var endloop = total_item;
+        } else {
+
+            var endloop = item_in_page;
+        }
+
+
+        for (var i = item_in_page - 40; i < endloop; i++) {
+
+            var tr = "<tr id='tabletr" + i + "'>";
+            var td1 = "<td><img  src=\"" + jsondata[i].image + "\" style=\"height: 20px;\" ></td>";
+            var td2 = "<td><a href=\"" + jsondata[i].link + "\" target =\"_blank\">" + jsondata[i].product + "</a></td>";
+            var td3 = "<td>" + jsondata[i].brand + "</td>";
+            var td4 = "<td>" + jsondata[i].source + "</td>";
+            var td5 = "<td>" + jsondata[i].price + "</td>";
+            var td6 = "<td><button class=\"btn btn-sm btn-default\"   onClick=\"modal_show('" + jsondata[i].image + "','" + jsondata[i].link + "','" + jsondata[i].product + "','" + jsondata[i].brand + "','" + jsondata[i].source + "','" + jsondata[i].price + "')\">Recommend</button>    ";
+            var tr2 = '</tr>';
+
+
+            $('#search_watches').append(tr + td1 + td2 + td3 + td4 + td5 + td6 + tr2);
+        }
+        $('#page_total').html('');
+        $('#page_total').append("Hasil Pencarian " + (item_in_page - 40 + 1) + " sampai " + item_in_page + " dari total " + jsondata.length + "");
+        $('#page_number').html('');
+
+        if ((page - 5) < 5) {
+            var start = 1;
+        }
+        else {
+            var start = page - 5;
+            var pg = "<button  class=\"btn btn-primary\"onClick=\"watches_page(1)\">\<\<</button> &nbsp";
+            var pg1 = "<button  class=\"btn btn-primary\"onClick=\"watches_page(" + (start - 1) + ")\">\<</button> &nbsp";
+            $('#page_number').append(pg + pg1);
+
+        }
+
+        if ((start + 10) > (total_page - 1)) {
+            var end = (total_page) | 0;
+        }
+        else {
+
+            var end = start + 10;
+        }
+
+        for (var i = start; i < end; i++) {
+            if (i == page) {
+                var pg = "<button  class=\"btn btn-primary\"onClick=\"watches_page(" + i + ")\" disabled>" + i + "</button> &nbsp";
+            } else {
+                var pg = "<button  class=\"btn btn-primary\"onClick=\"watches_page(" + i + ")\">" + i + "</button> &nbsp";
+            }
+
+            $('#page_number').append(pg);
+        }
+
+        if ((start + 10) < (total_page - 1)) {
+            if ((start + 10) > 10) {
+                var pg = "<button  class=\"btn btn-primary\"onClick=\"watches_page(" + (start + 10) + ")\">\></button> &nbsp";
+                var pg1 = "<button  class=\"btn btn-primary\"onClick=\"watches_page(" + (total_page - 1 | 0) + ")\">\>\></button> &nbsp";
+                $('#page_number').append(pg + pg1);
+            }
+        };
+
+
+    }
+    // var compare_item = 0;
+    // function add_compare(modalitem){
+
+    //     $('#btn_'+modalitem+'').hide();
+
+    //     var div1 ="<div class=\"col-md-3 col-sm-5 hero-feature\" id='items"+(compare_item+1)+"'>";
+    //     var items = document.getElementById(""+modalitem+"").innerHTML;
+    //     var div_close="</div></div></div>";
+
+    //     $('#modal_content').append(div1 + items + div_close);
+    // }
+
+    function modal_show(rimage, rlink, rproduct, rbrand, rsource, rprice) {
+
+        document.getElementById('rimage').src = rimage;
+        document.getElementById('rlink').value = rlink;
+        document.getElementById('rproduct').value = rproduct;
+        document.getElementById('rbrand').value = rbrand;
+        document.getElementById('rsource').value = rsource;
+        document.getElementById('rprice').value = rprice;
+        $("#Modalr").modal('show');
+    }
+
+    function add() {
+
+        $.post("process/product.php", {
+            action: 'add',
+            rimage: '' + document.getElementById("rimage").src + '',
+            rlink: '' + $('#rlink').val() + '',
+            rproduct: '' + $('#rproduct').val() + '',
+            rbrand: '' + $('#rbrand').val() + '',
+            rsource: '' + $('#rsource').val() + '',
+            rprice: '' + $('#rprice').val() + '',
+            due_date: '' + $('#due_date').val() + '',
+            note: '' + $('#note').val() + ''
+        },
+            function (data) {
+                alert(data);
+
+                $('#Modalr').modal('hide');
+            });
+    }
+
+
+</script>

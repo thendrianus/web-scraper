@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Watches</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/heroic-features.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Watches</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#">About Us</a>
+                    </li>
+                    <li>
+                        <a href="#">Services</a>
+                    </li>
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
+                    <li>
+                        <a href="./login.html" target="_blank">Login</a>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav" style="float:right;">
+                    <li>
+                        <a class="navbar-brand" href="#" onClick="modal_show()">Compare</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+    </nav>
+
+    <div class="container">
+
+        <header class="jumbotron hero-spacer">
+            <H1>Search</H1>
+            <div class="row">
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" value="" id="search_value" placeholder="Search">
+                </div>
+                <button class="btn btn-primary" value="add" id="formsubmit" onClick="search_watch()">Search
+                    Watches</button>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label class="col-sm-8 control-label">Search Dari Yang</label>
+                    <select class="form-control m-b" id="search_price">
+                        <option value="1">Termurah</option>
+                        <option value="2">Termahal</option>
+                    </select>
+                </div>
+                <div class="col-sm-4">
+                    <label class="col-sm-2 control-label">Category</label>
+                    <select class="form-control m-b" id="search_category">
+                        <option value="3">All Category</option>
+                        <option value="1">Jam Pria</option>
+                        <option value="2">Jam Wanita</option>
+                    </select>
+                </div>
+                <div class="col-sm-4">
+                    <label class="col-sm-2 control-label">Brand</label>
+                    <select class="form-control m-b" id="search_brand">
+                    </select>
+                </div>
+            </div>
+
+            <hr>
+            <div>
+                <div class="col-sm-2">
+                    <input type="checkbox" name="vehicle" value="Bike" id="radatime" checked> Radatime
+                </div>
+                <div class="col-sm-2">
+                    <input type="checkbox" name="vehicle" value="Bike" id="machwatch" checked> Machtwatch
+                </div>
+                <div class="col-sm-2">
+                    <input type="checkbox" name="vehicle" value="Bike" id="mataharimall" checked> Matahari Mall
+                </div>
+                <div class="col-sm-2">
+                    <input type="checkbox" name="vehicle" value="Bike" id="lazada" checked> Lazada
+                </div>
+                <div class="col-sm-2">
+                    <input type="checkbox" name="vehicle" value="Bike" id="rakuten" checked> Rakuten
+                </div>
+            </div>
+        </header>
+
+        <hr>
+        <div class="row text-center" id="top_watches">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3>Top Watches</h3>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row" id="search_watches_wrap">
+            <p id='page_total'></p>
+            <div class="row text-center" id="search_watches">
+
+
+            </div>
+            <div id='page_number'>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Your Website 2015</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <div id="ModalCompare" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Compare</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="modal_content" class=" row text-center ">
+
+                    </div>
+                    <form class="form-horizontal" action="javascript:void(0);" name="fromAccount" id="fromAccount"
+                        autocomplete="off">
+
+
+                        <div class="line line-dashed line-lg pull-in"></div>
+
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="js/jquery.js"></script>
+
+    <script src="js/bootstrap.min.js"></script>
+
+    <script>
+
+        $.post("process/index.php", {
+            action: 'top_watches'
+        },
+            function (data) {
+                var jsondata = JSON.parse(data);
+                for (var i = 0; i < jsondata.length; i++) {
+
+                    var div1 = "<div class=\"col-md-3 col-sm-5 hero-feature\" id='items" + i + "'>";
+                    var div2 = "<div class=\"thumbnail\">";
+                    var img = "<img src=\"" + jsondata[i].image + "\" style=\"height: 128px;\">";
+                    var div3 = "<div class=\"caption\">";
+                    var h3 = "<h5>" + jsondata[i].product + "</h5>";
+                    var p1 = "<p>" + jsondata[i].brand + "-" + jsondata[i].source + "</p>";
+                    var p4 = "<h3>" + jsondata[i].price + "</h3>";
+                    var p2 = "<p><a class=\"btn btn-primary\" id=\"btn_items" + i + "\" onClick=\"add_compare('items" + i + "')\" >Compare</a>&nbsp<a href=\"" + jsondata[i].link + "\" target =\"_blank\"class=\"btn btn-primary\">More Info</a> </p>";
+                    var div_close = "</div></div></div>";
+                    $('#top_watches').append(div1 + div2 + img + div3 + h3 + p1 + p4 + p2 + div_close);
+                }
+            });
+
+        $.post("process/index.php", {
+            action: 'get_brand'
+        },
+            function (data) {
+                var jsondata = JSON.parse(data)
+                for (var i = 0; i < jsondata.length; i++) {
+                    var option_var = "<option value=\"" + jsondata[i].brand_id + "\">" + jsondata[i].name + "</option>";
+                    $('#search_brand').append(option_var);
+                }
+            });
+
+        var jsondata;
+
+        function search_watch() {
+
+            jsondata = "";
+
+            var checkedvar = "";
+            if (document.getElementById('radatime').checked) {
+                checkedvar = checkedvar + "OR t2.web_source_id = 1 ";
+            } if (document.getElementById('machwatch').checked) {
+                checkedvar = checkedvar + "OR t2.web_source_id = 2 ";
+            } if (document.getElementById('mataharimall').checked) {
+                checkedvar = checkedvar + "OR t2.web_source_id = 3 ";
+            } if (document.getElementById('lazada').checked) {
+                checkedvar = checkedvar + "OR t2.web_source_id = 4 ";
+            } if (document.getElementById('rakuten').checked) {
+                checkedvar = checkedvar + "OR t2.web_source_id = 5 ";
+            }
+
+            if (checkedvar != "") {
+                checkedvar = "&&(" + (checkedvar.substring(2)) + ")";
+            }
+            else {
+                checkedvar = "&& t2.web_source_id = 0";
+            }
+
+            $.post("process/index.php", {
+                action: 'search_watches',
+                category: '' + $('#search_category').val() + '',
+                search_price: '' + $('#search_price').val() + '',
+                brand: '' + $('#search_brand').val() + '',
+                search: '' + $('#search_value').val() + '',
+                checked2: checkedvar
+            },
+                function (data) {
+
+                    $('#top_watches').hide();
+
+                    jsondata = JSON.parse(data);
+                    if (jsondata != '') {
+                        watches_page(1);
+                    }
+                    else {
+                        // alert("bnm");
+                        $('#page_total').html('');
+                        $('#page_number').html('');
+                        $('#search_watches').html("<div class='row text-center'> <h2>Search No Result</h2> </div>");
+                    }
+
+                });
+        }
+
+        function watches_page(page) {
+            var total_item = jsondata.length;
+            var item_in_page = page * 40;
+
+            var total_page = total_item / 40 + 2;
+
+            $('#search_watches').html('');
+
+            if (item_in_page > total_item) {
+                var endloop = total_item;
+            } else {
+
+                var endloop = item_in_page;
+            }
+
+
+            for (var i = item_in_page - 40; i < endloop; i++) {
+
+                var div1 = "<div class=\"col-md-3 col-sm-5 hero-feature\" id='items2" + i + "'>";
+                var div2 = "<div class=\"thumbnail\">";
+                var img = "<img  src=\"" + jsondata[i].image + "\" style=\"height: 128px;\" >";
+                var div3 = "<div class=\"caption\">";
+                var h3 = "<h5>" + jsondata[i].product + "</h5>";
+                var p1 = "<p>" + jsondata[i].brand + "-" + jsondata[i].source + "</p>";
+                var p4 = "<h3>" + jsondata[i].price + "</h3>";
+                var p2 = "<p><a class=\"btn btn-primary\" id=\"btn_items2" + i + "\" onClick=\"add_compare('items2" + i + "')\" >Compare</a>&nbsp<a href=\"" + jsondata[i].link + "\" target =\"_blank\"class=\"btn btn-primary\">More Info</a> </p>";
+                var div_close = "</div></div></div>";
+                $('#search_watches').append(div1 + div2 + img + div3 + h3 + p1 + p4 + p2 + div_close);
+            }
+            $('#page_total').html('');
+            $('#page_total').append("Hasil Pencarian " + (item_in_page - 40 + 1) + " sampai " + item_in_page + " dari total " + jsondata.length + "");
+            $('#page_number').html('');
+
+            if ((page - 5) < 5) {
+                var start = 1;
+            }
+            else {
+                var start = page - 5;
+                var pg = "<button  class=\"btn btn-primary\"onClick=\"watches_page(1)\">\<\<</button> &nbsp";
+                var pg1 = "<button  class=\"btn btn-primary\"onClick=\"watches_page(" + (start - 1) + ")\">\<</button> &nbsp";
+                $('#page_number').append(pg + pg1);
+
+            }
+
+            if ((start + 10) > (total_page - 1)) {
+                var end = (total_page) | 0;
+            }
+            else {
+
+                var end = start + 10;
+            }
+
+            for (var i = start; i < end; i++) {
+                if (i == page) {
+                    var pg = "<button  class=\"btn btn-primary\"onClick=\"watches_page(" + i + ")\" disabled>" + i + "</button> &nbsp";
+                } else {
+                    var pg = "<button  class=\"btn btn-primary\"onClick=\"watches_page(" + i + ")\">" + i + "</button> &nbsp";
+                }
+
+                $('#page_number').append(pg);
+            }
+
+            if ((start + 10) < (total_page - 1)) {
+                if ((start + 10) > 10) {
+                    var pg = "<button  class=\"btn btn-primary\"onClick=\"watches_page(" + (start + 10) + ")\">\></button> &nbsp";
+                    var pg1 = "<button  class=\"btn btn-primary\"onClick=\"watches_page(" + (total_page - 1 | 0) + ")\">\>\></button> &nbsp";
+                    $('#page_number').append(pg + pg1);
+                }
+            };
+
+
+        }
+        var compare_item = 0;
+        function add_compare(modalitem) {
+
+            $('#btn_' + modalitem + '').hide();
+
+            var div1 = "<div class=\"col-md-3 col-sm-5 hero-feature\" id='items" + (compare_item + 1) + "'>";
+            var items = document.getElementById("" + modalitem + "").innerHTML;
+            var div_close = "</div></div></div>";
+
+            $('#modal_content').append(div1 + items + div_close);
+        }
+
+        function modal_show() {
+            $("#ModalCompare").modal('show');
+        }
+    </script>
+
+</body>
+
+</html>

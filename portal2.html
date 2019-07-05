@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Watches</title>
+
+    <link href="css/portal-bootstrap.min.css" rel="stylesheet">
+    <link href="css/sb-admin.css" rel="stylesheet">
+
+    <link href="css/jquery-ui.css" rel="Stylesheet">
+    </link>
+    <link rel="stylesheet" type="text/css" href="css/jquery.dataTables_themeroller.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="css/dataTables.jqueryui.css">
+
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <style>
+        #nav-content {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Scraping Watches</a>
+            </div>
+
+            <ul class="nav navbar-right top-nav">
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i><strong
+                            id="username"></strong> <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#" id="logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li id="nav-dashboard">
+                        <a href="#" onClick="return navclick('scraping')"><i class="fa fa-fw fa-dashboard"></i>
+                            Dashboard</a>
+                    </li>
+                    <li id="link">
+                        <a href="#" onClick="return navclick('product')"><i class="fa fa-fw fa-dashboard"></i>
+                            Product</a>
+                    </li>
+                    <li>
+                        <a href="#" onClick="return navclick('rproduct')"><i
+                                class="fa fa-fw fa-dashboard"></i>Recomended Product</a>
+                    </li>
+                    <li id="scrapelink">
+                        <a href="#" onClick="return navclick('link')"><i class="fa fa-fw fa-dashboard"></i> Scrape
+                            Link</a>
+                    </li>
+                    <li id="listing">
+                        <a href="#" onClick="return navclick('account')"><i class="fa fa-fw fa-dashboard"></i>
+                            Account</a>
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+                <div class="row">
+                    <section class="vbox">
+                        <div class="col-lg-12">
+
+                            <div id="nav-content2">
+                                <center><img src="img/loading.gif" style="padding-top:10%" /></center>
+                            </div>
+
+                            <div id="nav-content">
+                                <center><img src="img/loading.gif" style="padding-top:10%" /></center>
+                            </div>
+
+                        </div>
+                </div>
+                </section>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+    </div>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-printme.js"></script>
+    <script>
+
+        $.post("process/portal.php", {
+            action: 'session'
+        },
+            function (data) {
+
+                var jsondata = JSON.parse(data);
+
+                if (jsondata[0].session == 'index') {
+                    window.top.location.href = "index.html";
+                }
+                else {
+
+                    document.getElementById('username').innerHTML = " " + jsondata[0].session1;
+
+                }
+
+            });
+
+        $('#nav-content2').load('scraping.html');
+
+
+
+        $("#logout").click(function () {
+            $.post("process/portal.php", {
+                action: 'logout'
+            },
+                function (data) {
+                    window.top.location.href = "index.html";
+                });
+        });
+
+        document.getElementById('nav-dashboard').className = 'active';
+
+        $(".nav li").on("click", function () {
+            $(".nav li").removeClass("active");
+            $(this).addClass("active");
+        });
+
+        function navclick(id) {
+            $('#nav-content2').hide();
+            $('#nav-content').unload();
+            if (id == 'scraping') {
+                $('#nav-content2').show();
+                $('#nav-content').hide();
+            } else if (id == 'account') {
+                $('#nav-content').load('account.html');
+                $('#nav-content').show();
+            } else if (id == 'product') {
+                $('#nav-content').load('product.html');
+                $('#nav-content').show();
+            } else if (id == 'rproduct') {
+                $('#nav-content').load('rproduct.html');
+                $('#nav-content').show();
+            } else if (id == 'link') {
+                $('#nav-content').load('Scrapelink.html');
+                $('#nav-content').show();
+            }
+
+        }
+
+    </script>
+</body>
+
+</html>
