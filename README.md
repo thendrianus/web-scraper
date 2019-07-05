@@ -6,6 +6,7 @@ It's a project that i did to scrap product data from online shop/market place be
 * www.lazada.co.id
 * www.machtwatch.co.id
 * www.rakuten.co.id
+
 And shown the product on my website, so if people wanted to find a watch they only need to go to one website
 
 ## Technology
